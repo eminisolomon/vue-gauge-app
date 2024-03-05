@@ -76,6 +76,7 @@ export default {
       context.strokeStyle = '#70E094'
       context.stroke()
 
+      // Drawing the remaining segments
       const remainingStartAngle = coloredEndAngle
       const remainingEndAngle = Math.PI * 2
 
@@ -91,16 +92,14 @@ export default {
         const startAngle =
           remainingStartAngle + spaceAtBothSides + (segmentAngle + spaceBetweenSegments) * i
         const endAngle = startAngle + segmentAngle
-        
-        context.lineJoin = 'round';
-        context.arc(
-          canvas.width / 2,
-          canvas.height / 2,
-          canvas.width / 2 - 30,
-          startAngle,
-          endAngle,
-          false
-        )
+
+        // Adjust the radius value to control the border radius
+        const radius = canvas.width / 2 - 30
+        const x = canvas.width / 2
+        const y = canvas.height / 2
+
+        // Draw the arc with border radius
+        context.arc(x, y, radius, startAngle, endAngle, false)
         context.lineWidth = 40
         context.strokeStyle = '#333333'
         context.stroke()
