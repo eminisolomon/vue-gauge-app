@@ -1,26 +1,37 @@
 <template>
   <div class="center-container">
-    <Box>
-      <CircularGauge :value="gaugeValue" />
+    <Box :title="boxTitle">
+      <CircularGauge
+        :value="gaugeValue"
+        :circleSize="gaugeSize"
+        :name="gaugeName"
+        :ayaCount="gaugeAyaCount"
+        :hifdCount="gaugeHifdCount"
+      />
     </Box>
   </div>
 </template>
 
 <script>
-import CircularGauge from './components/CircularGauge.vue';
-import Box from './components/Box.vue';
+import CircularGauge from './components/CircularGauge.vue'
+import Box from './components/Box.vue'
 
 export default {
   components: {
     CircularGauge,
-    Box,
+    Box
   },
   data() {
     return {
-      gaugeValue: 50,
-    };
-  },
-};
+      gaugeValue: 65,
+      gaugeSize: 350,
+      gaugeName: 'Al Baqarah',
+      gaugeAyaCount: 283,
+      gaugeHifdCount: 283,
+      boxTitle: 'Gauge Box'
+    }
+  }
+}
 </script>
 
 <style>

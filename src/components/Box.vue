@@ -1,14 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 </script>
 
 <template>
   <div class="gauge-box">
-    <div class="gauge-icon">
-      <font-awesome-icon icon="chart-line" class="icon" />
+    <div class="gauge-content">
+      <div class="gauge-icon">
+        <font-awesome-icon icon="chart-line" class="icon" />
+      </div>
+      <div class="gauge-text">Surah</div>
     </div>
-    <div class="gauge-text">Revenue</div>
     <slot></slot>
   </div>
 </template>
@@ -16,47 +18,47 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 <style scoped>
 .gauge-box {
   position: relative;
-  width: calc(100vw - 10px);
-  margin: 0 5px;
+  width: 100%;
   max-width: 700px;
-  height: 90vw;
+  height: calc(100vw + 20px);
   background-color: #202020;
   border-radius: 25px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  margin: 0 5px;
+}
+
+.gauge-content {
+  display: flex;
   align-items: center;
 }
 
 .gauge-icon {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  margin-right: 10px;
 }
 
 .icon {
   font-size: 24px;
   color: #4caf50;
-  margin-right: 10px;
 }
 
 .gauge-text {
-  position: absolute;
-  top: 10px;
-  left: 40px;
   color: #fff;
   font-size: 18px;
   font-weight: bold;
+  margin-bottom: 5px;
 }
 
 @media (min-width: 768px) {
   .gauge-box {
-    width: 500px;
     height: 500px;
   }
 
   .gauge-text {
     font-size: 24px;
-    left: 60px;
+    margin-bottom: 20px;
   }
 }
 </style>
