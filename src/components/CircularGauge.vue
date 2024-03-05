@@ -91,6 +91,8 @@ export default {
         const startAngle =
           remainingStartAngle + spaceAtBothSides + (segmentAngle + spaceBetweenSegments) * i
         const endAngle = startAngle + segmentAngle
+        
+        context.lineJoin = 'round';
         context.arc(
           canvas.width / 2,
           canvas.height / 2,
@@ -99,8 +101,8 @@ export default {
           endAngle,
           false
         )
-        context.strokeStyle = i % 2 === 0 ? '#fff' : '#ddd'
         context.lineWidth = 40
+        context.strokeStyle = '#333333'
         context.stroke()
       }
     }
@@ -139,5 +141,31 @@ export default {
   background-color: white;
   border-radius: 20px;
   transform: translateX(9rem) translateY(-11rem);
+  z-index: 2;
+}
+
+.circular-gauge canvas {
+  z-index: 1;
+}
+
+.task-info,
+.percentage-info {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.circular-gauge canvas.colored-segment {
+  z-index: 1;
+  background-color: #70e094;
+}
+
+.circular-gauge canvas.remaining-segment {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-color: #f0f0f0;
 }
 </style>
