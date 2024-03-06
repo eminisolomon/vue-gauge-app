@@ -56,55 +56,60 @@ export default {
   },
   methods: {
     drawGauge() {
-      const { context, canvas, value } = this
-      context.clearRect(0, 0, canvas.width, canvas.height)
+  const { context, canvas, value } = this;
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Drawing the colored segment
-      const coloredStartAngle = 0
-      const coloredEndAngle = (value / this.maxValue) * (Math.PI * 2)
+  // Drawing the colored segment
+  const coloredStartAngle = 0;
+  let coloredEndAngle = (value / this.maxValue) * (Math.PI * 2);
+  coloredEndAngle = Math.min(coloredEndAngle, Math.PI * 2);
 
-      context.beginPath()
-      context.arc(
-        canvas.width / 2,
-        canvas.height / 2,
-        canvas.width / 2 - 30,
-        coloredStartAngle,
-        coloredEndAngle,
-        false
-      )
-      context.lineWidth = 40
-      context.strokeStyle = '#70E094'
-      context.stroke()
+  context.beginPath();
+  context.arc(
+    canvas.width / 2,
+    canvas.height / 2,
+    canvas.width / 2 - 30,
+    coloredStartAngle,
+    coloredEndAngle,
+    false
+  );
+  context.lineWidth = 40;
+  context.strokeStyle = '#70E094';
+  context.stroke();
 
-      // Drawing the remaining segments
-      const remainingStartAngle = coloredEndAngle
-      const remainingEndAngle = Math.PI * 2
+  // Drawing the remaining segments
+  const remainingStartAngle = coloredEndAngle;
+  const remainingEndAngle = Math.PI * 2;
 
-      const numSegments = 10
-      const spaceAtBothSides = 0.05
-      const spaceBetweenSegments = 0.1
-      const totalSpace = spaceAtBothSides * 2 + spaceBetweenSegments * (numSegments - 1)
-      const availableSpace = remainingEndAngle - remainingStartAngle - totalSpace
-      const segmentAngle = availableSpace / numSegments
+  let numSegments = 10;
 
-      for (let i = 0; i < numSegments; i++) {
-        context.beginPath()
-        const startAngle =
-          remainingStartAngle + spaceAtBothSides + (segmentAngle + spaceBetweenSegments) * i
-        const endAngle = startAngle + segmentAngle
+  // Adjust the reduction based on your requirements
+  if (value / this.maxValue > 0.75) {
+    numSegments = Math.max(1, Math.round(10 * (1 - (value / this.maxValue - 0.75) / 0.25)));
+  }
 
-        // Adjust the radius value to control the border radius
-        const radius = canvas.width / 2 - 30
-        const x = canvas.width / 2
-        const y = canvas.height / 2
+  const spaceAtBothSides = 0.05;
+  const spaceBetweenSegments = 0.1;
+  const totalSpace = spaceAtBothSides * 2 + spaceBetweenSegments * (numSegments - 1);
+  const availableSpace = remainingEndAngle - remainingStartAngle - totalSpace;
+  const segmentAngle = availableSpace / numSegments;
 
-        // Draw the arc with border radius
-        context.arc(x, y, radius, startAngle, endAngle, false)
-        context.lineWidth = 40
-        context.strokeStyle = '#333333'
-        context.stroke()
-      }
-    }
+  for (let i = 0; i < numSegments; i++) {
+    context.beginPath();
+    const startAngle =
+      remainingStartAngle + spaceAtBothSides + (segmentAngle + spaceBetweenSegments) * i;
+    const endAngle = startAngle + segmentAngle;
+
+    const radius = canvas.width / 2 - 30;
+    const x = canvas.width / 2;
+    const y = canvas.height / 2;
+
+    context.arc(x, y, radius, startAngle, endAngle, false);
+    context.lineWidth = 40;
+    context.strokeStyle = '#333333';
+    context.stroke();
+  }
+}
   }
 }
 </script>
