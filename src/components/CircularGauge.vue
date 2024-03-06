@@ -240,7 +240,10 @@ export default {
 
       // Drawing the colored segment
       const coloredStartAngle = 0
-      const coloredEndAngle = (value / this.maxValue) * (Math.PI * 2)
+      let coloredEndAngle = (value / this.maxValue) * (Math.PI * 2)
+
+      // Ensure coloredEndAngle is within the range [0, 2 * Math.PI]
+      coloredEndAngle = Math.min(Math.max(coloredEndAngle, 0), Math.PI * 2)
 
       context.beginPath()
       context.arc(
@@ -259,10 +262,22 @@ export default {
       const remainingStartAngle = coloredEndAngle
       const remainingEndAngle = Math.PI * 2
 
-      const numSegments = 10
+      let numSegments = 10
+
+      // Ensure that there are enough segments to cover the remaining space
+      if (value / this.maxValue >= 0.75) {
+        numSegments = Math.max(1, Math.round(10 * (1 - (value / this.maxValue - 0.75) / 0.25)))
+      }
+
       const spaceAtBothSides = 0.05
       const spaceBetweenSegments = 0.1
-      const totalSpace = spaceAtBothSides * 2 + spaceBetweenSegments * (numSegments - 1)
+
+      // Adjust totalSpace based on the remaining space and the value being close to the maximum
+      const totalSpace = Math.min(
+        remainingEndAngle - remainingStartAngle,
+        spaceAtBothSides * 2 + spaceBetweenSegments * (numSegments - 1)
+      )
+
       const availableSpace = remainingEndAngle - remainingStartAngle - totalSpace
       const segmentAngle = availableSpace / numSegments
 
@@ -272,12 +287,10 @@ export default {
           remainingStartAngle + spaceAtBothSides + (segmentAngle + spaceBetweenSegments) * i
         const endAngle = startAngle + segmentAngle
 
-        // Adjust the radius value to control the border radius
         const radius = canvas.width / 2 - 30
         const x = canvas.width / 2
         const y = canvas.height / 2
 
-        // Draw the arc with border radius
         context.arc(x, y, radius, startAngle, endAngle, false)
         context.lineWidth = 40
         context.strokeStyle = '#333333'
