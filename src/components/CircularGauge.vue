@@ -1,4 +1,5 @@
-<div class="circular-gauge">
+<template>
+  <div class="circular-gauge">
     <canvas ref="canvas" :width="circleSize" :height="circleSize"></canvas>
     <div class="gauge-text">
       <div class="task-info">{{ name }}</div>
@@ -15,7 +16,7 @@ export default {
   props: {
     circleSize: {
       type: Number,
-      default: 350
+      default: 400
     },
     value: {
       type: Number
@@ -66,7 +67,7 @@ export default {
       context.arc(
         canvas.width / 2,
         canvas.height / 2,
-        canvas.width / 2 - 30,
+        canvas.width / 2 - 20,
         coloredStartAngle,
         coloredEndAngle,
         false
@@ -93,7 +94,7 @@ export default {
         const endAngle = startAngle + segmentAngle
 
         // Adjust the radius value to control the border radius
-        const radius = canvas.width / 2 - 30
+        const radius = canvas.width / 2 - 20
         const x = canvas.width / 2
         const y = canvas.height / 2
 
