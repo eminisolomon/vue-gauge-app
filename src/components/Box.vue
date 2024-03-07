@@ -11,14 +11,16 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
       </div>
       <div class="gauge-text">Surah</div>
     </div>
-    <slot></slot>
+    <div class="gauge-container">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .gauge-box {
   position: relative;
-  width: 100%;
+  width: 500px;
   max-width: 700px;
   height: calc(100vw + 20px);
   background-color: #202020;
@@ -26,8 +28,16 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 20px;
+  padding: 10px;
   margin: 0 5px;
+}
+
+
+.gauge-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .gauge-content {

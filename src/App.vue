@@ -23,8 +23,8 @@ export default {
   },
   data() {
     return {
-      gaugeValue: 100,
-      gaugeSize: 350,
+      gaugeValue: 80,
+      gaugeSize: 400,
       gaugeName: 'Al Baqarah',
       gaugeAyaCount: 283,
       gaugeHifdCount: 283,
